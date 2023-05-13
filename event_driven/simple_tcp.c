@@ -181,7 +181,6 @@ convert_string_to_port(const char *s)
   char *endp;
   p = strtol(s, &endp, 10);
   if(*endp != '\0') {
-    fprintf(stderr, "Incorrect port: %s\n", s);
     p = -1;
   }
   return p;
@@ -196,7 +195,9 @@ main(int argc, char **argv)
     return 1;
   }
   port = convert_string_to_port(argv[1]);
-  if(-1 == port)
+  if(-1 == port) {
+    fprintf(stderr, "Incorrect port: %s\n", argv[1]);
     return 1;
+  }
   return server(port);
 }
